@@ -25,18 +25,16 @@ class App extends React.Component {
   }
 
   roll() {
-    let rolls = [];
+    let rolls = { success: 0, failure: 0, advantage: 0, threat: 0, triumph: 0, dispair: 0 };
     let that = this;
 
     this.dice_sets.forEach(function(set) {
       for(var i = 0; i < that.state[set[0]]; i++) {
-        let roll = that.roll_die(set[1]);
-        rolls = rolls.concat(roll);
+        that.roll_die(rolls, set[1]);
       }
     });
 
     let computed = this.compute_rolls(rolls);
-    console.log(computed);
     this.setState( { Rolled: rolls, Computed: computed } );
   }
 
@@ -53,9 +51,34 @@ class App extends React.Component {
     this.setState(changes); 
   }
 
-  roll_die(die_set) {
-    let roll = this.rand_roll(die_set.length);
-    return die_set[roll];
+  roll_die(rolls, die_set) {
+    let roll = die_set[this.rand_roll(die_set.length)];
+
+    roll.forEach((r) => {
+      switch(r) {
+        case "S":
+          rolls.success += 1;
+          break;
+        case "F":
+          rolls.failure += 1;
+          break;
+        case "A":
+          rolls.advantage += 1;
+          break;
+        case "T":
+          rolls.threat += 1;
+          break;
+        case "+":
+          rolls.triumph += 1;
+          break;
+        case "-":
+          rolls.dispair += 1;
+          break;
+      }
+    });
+
+    console.dir(rolls);
+    return rolls;
   }
 
   rand_roll(n) {
@@ -68,30 +91,8 @@ class App extends React.Component {
     let triumph = 0;
     let dispair = 0;
 
-    rolls.forEach((d) => {
-      switch(d) {
-        case "S":
-          success += 1;
-          break;
-        case "F":
-          success -= 1;
-          break;
-        case "A":
-          advantage += 1;
-          break;
-        case "T":
-          advantage -= 1;
-          break;
-        case "+":
-          triumph += 1;
-          success += 1;
-          break;
-        case "-":
-          dispair += 1;
-          success -= 1;
-          break;
-      }
-    });
+    success = rolls.success + rolls.triumph - rolls.failure - rolls.dispair;
+    advantage = rolls.advantage - rolls.threat;
 
     return [success, advantage, triumph, dispair];
   }

@@ -3,6 +3,30 @@ import DieResult from "./DieResult";
 
 class ResultPane extends React.Component {
 
+  rolled_line() {
+    var rolled = this.props.rolled;
+    var line = [];
+
+    for(var i = 0; i < rolled.success; i++)
+        line.push(<DieResult die_type="S" />);
+
+    for(var i = 0; i < rolled.failure; i++)
+        line.push(<DieResult die_type="F" />);
+
+    for(var i = 0; i < rolled.advantage; i++)
+        line.push(<DieResult die_type="A" />);
+
+    for(var i = 0; i < rolled.threat; i++)
+        line.push(<DieResult die_type="T" />);
+
+    for(var i = 0; i < rolled.triumph; i++)
+        line.push(<DieResult die_type="+" />);
+
+    for(var i = 0; i < rolled.dispair; i++)
+        line.push(<DieResult die_type="-" />);
+    return line;
+  }
+
   computed_line() {
     console.log("In computed_line");
     console.log(this.props.computed);
@@ -44,7 +68,8 @@ class ResultPane extends React.Component {
     return (
       <div id="result-pane">
         <div id="rolled">
-          Rolled Dice: {this.props.rolled}
+          Rolled Dice: <br/>
+          {this.rolled_line()}
         </div>
         <div id="computed">
           Computed Result<br/>
