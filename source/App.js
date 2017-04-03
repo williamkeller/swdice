@@ -21,7 +21,7 @@ class App extends React.Component {
   }
 
   default_state() {
-    return { B: 0, A: 0, P: 0, S: 0, D: 0, C: 0, Rolled: "", Computed: "" };
+    return { B: 0, A: 0, P: 0, S: 0, D: 0, C: 0, Rolled: "", Computed: "", Empty: true };
   }
 
   roll() {
@@ -35,7 +35,7 @@ class App extends React.Component {
     });
 
     let computed = this.compute_rolls(rolls);
-    this.setState( { Rolled: rolls, Computed: computed } );
+    this.setState( { Rolled: rolls, Computed: computed, Empty: false } );
   }
 
   clear() {
@@ -111,7 +111,8 @@ class App extends React.Component {
 
         <ButtonBar roll={this.roll.bind(this)} clear={this.clear.bind(this)} />
 
-        <ResultPane rolled={this.state.Rolled} computed={this.state.Computed} />
+        <ResultPane rolled={this.state.Rolled} computed={this.state.Computed}
+                    empty={this.state.Empty} />
       </div>
     );
   }

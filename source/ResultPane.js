@@ -28,7 +28,6 @@ class ResultPane extends React.Component {
   }
 
   computed_line() {
-    console.log("In computed_line");
     console.log(this.props.computed);
 
     let computed = this.props.computed;
@@ -64,6 +63,13 @@ class ResultPane extends React.Component {
     return line;
   }
 
+  result_class() {
+    if(this.props.empty)
+      return "";
+    else
+      return (this.props.computed[0] > 0) ? "success" : "failure";
+  }
+
   render() {
     return (
       <div id="result-pane">
@@ -71,7 +77,7 @@ class ResultPane extends React.Component {
           Rolled Dice: <br/>
           {this.rolled_line()}
         </div>
-        <div id="computed">
+        <div id="computed" className={this.result_class()}>
           Computed Result<br/>
           {this.computed_line()}
         </div>
