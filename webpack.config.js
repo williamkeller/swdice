@@ -5,7 +5,7 @@ module.exports = {
   ],
 
   output: {
-    path: __dirname, 
+    path: __dirname,
     filename: "bundle.js"
   },
 
