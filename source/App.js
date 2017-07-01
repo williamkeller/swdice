@@ -4,6 +4,8 @@ import DiePicker from "./DiePicker";
 import ButtonBar from "./ButtonBar";
 import ResultPane from "./ResultPane";
 
+import style from "./swdice.scss";
+
 class App extends React.Component {
   constructor(props) {
     super(props);
