@@ -15,4 +15,4 @@ To launch a development server
 
 `npm start`
 
-
+Or, see it live at https://williamkeller.github.io/swdice/ 
